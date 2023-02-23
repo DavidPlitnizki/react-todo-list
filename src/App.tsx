@@ -1,16 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
-import './App.css';
+import styled, { ThemeProvider } from 'styled-components';
+import Header from './coponents/Header';
+import { colors } from './styles/colors';
 
-const Container = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
 `;
+
+const theme = {
+  ...colors
+};
 
 const App: React.FC = () => {
   return (
-    <Container>Home</Container>
+    <ThemeProvider theme={theme}>
+      <Layout>
+        <Header />
+      </Layout>
+    </ThemeProvider>
   )
 }
 
