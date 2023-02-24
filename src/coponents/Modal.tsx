@@ -35,7 +35,6 @@ const StyledModal = Modal.styled`
     const onCreateTask = () => {
         console.log(inputTaskRef.current)
         if (inputTaskRef.current?.value) {
-            console.log(inputTaskRef.current?.value)
             const newTask:ITask = {
                 value: inputTaskRef.current?.value,
                 id: uuid(),
