@@ -6,7 +6,8 @@ import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
 import ContainerCenter from '../ui/ContainerCenter';
 import { useAppDispatch } from '../store/hooks';
 import { addTask } from '../features/task/taskSlice';
-import { ITask } from '../types';
+import { ITask, STATUS_TASK } from '../types';
+import uuid from 'react-uuid';
 
 
 const StyledModal = Modal.styled`
@@ -28,18 +29,27 @@ const StyledModal = Modal.styled`
   }
   
  const TaskModal:React.FC<IProps> = ({isOpen, oncloseModal}) => {
-    const inputTaskRef = useRef<HTMLInputElement | null>(null);
+    const inputTaskRef = useRef<HTMLInputElement | null | any>(null);
     const dispatch = useAppDispatch();
 
     const onCreateTask = () => {
         console.log(inputTaskRef.current)
         if (inputTaskRef.current?.value) {
+            console.log(inputTaskRef.current?.value)
             const newTask:ITask = {
                 value: inputTaskRef.current?.value,
-                id: '123',
-                status: 'new'
+                id: uuid(),
+                status: STATUS_TASK.NEW
             }
             dispatch(addTask(newTask));
+            clearInput();
+        }
+        oncloseModal(false);
+    }
+
+    const clearInput = () => {
+        if (inputTaskRef.current) {
+            inputTaskRef.current.value = "";
         }
     }
 
