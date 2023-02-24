@@ -16,18 +16,25 @@ export const taskSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.taskList = [...state.taskList, action.payload];
-      
-    },
-    removeTask: (state) => {
-      
-    },
-    updateTask: (state) => {
 
+      
+    },
+    removeTask: (state, action: PayloadAction<string>) => {
+      state.taskList = state.taskList.filter((item: ITask) => item.id !== action.payload);
+      
+    },
+    toggleTask: (state, action: PayloadAction<string>) => {
+      state.taskList = state.taskList.map((item: ITask) => {
+        if (item.id === action.payload) {
+          item.completed = !item.completed;
+        }
+        return item;
+      })
     }
   },
 });
 
-export const { addTask, removeTask, updateTask } = taskSlice.actions;
+export const { addTask, removeTask, toggleTask } = taskSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

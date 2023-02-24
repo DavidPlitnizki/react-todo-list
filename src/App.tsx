@@ -4,6 +4,7 @@ import Header from './coponents/Header';
 import { colors } from './styles/colors';
 import { ModalProvider } from 'styled-react-modal'
 import TaskModal from './coponents/Modal';
+import Main from './coponents/Main';
 
 
 const Layout = styled.div`
@@ -24,6 +25,7 @@ const [isOpenTaskModal, setIsOpenTaskModal] = useState<boolean>(false);
     <ThemeProvider theme={theme}>
       <Layout>
         <Header onOpenTaskModal={setIsOpenTaskModal} />
+        <Main />
       </Layout>
       <ModalProvider>
         <TaskModal isOpen={isOpenTaskModal} oncloseModal={setIsOpenTaskModal} />
