@@ -1,7 +1,7 @@
 export interface ITask {
     id: string,
     value: string;
-    status: 'to-do' | 'in-progress' | 'done';
+    status: 'new' | 'done';
 }
 
 export interface ITaskList {

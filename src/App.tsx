@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Header from './coponents/Header';
 import { colors } from './styles/colors';
+import { ModalProvider } from 'styled-react-modal'
+import TaskModal from './coponents/Modal';
+
 
 const Layout = styled.div`
   display: flex;
@@ -13,11 +16,18 @@ const theme = {
 };
 
 const App: React.FC = () => {
+const [isOpenTaskModal, setIsOpenTaskModal] = useState<boolean>(false);
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <Layout>
-        <Header />
+        <Header onOpenTaskModal={setIsOpenTaskModal} />
       </Layout>
+      <ModalProvider>
+        <TaskModal isOpen={isOpenTaskModal} oncloseModal={setIsOpenTaskModal} />
+      </ModalProvider>
     </ThemeProvider>
   )
 }
