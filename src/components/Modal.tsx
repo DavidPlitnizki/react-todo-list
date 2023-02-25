@@ -94,12 +94,11 @@ const Transition = React.forwardRef(function Transition(
 
     return (
     <>
-      <Dialog
-          open={isOpen}
-          TransitionComponent={Transition}
-          keepMounted
-          aria-describedby="alert-dialog-create-task"
-        >
+        <Dialog
+            open={isOpen}
+            TransitionComponent={Transition}
+            keepMounted
+            aria-describedby="alert-dialog-create-task">
           <BoxContent>
               <DialogTitle>{"Create New Task"}</DialogTitle>
               <DialogContent>

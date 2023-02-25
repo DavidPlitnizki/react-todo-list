@@ -90,7 +90,7 @@ const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted
         onHandleSort(SORT_TYPE.DEC);
     }, [onHandleSort]);
 
-    const onChangeHandle = (e: any) => {
+    const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
         setSortString(text);
     }
