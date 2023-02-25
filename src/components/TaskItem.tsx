@@ -73,6 +73,11 @@ const StyledListItem = MUIStyled(ListItem)({
     height: '80px'
 });
 
+const StyledContainerSpaceBetweenHalf = MUIStyled(ContainerSpaceBetween)({
+    width: '50%',
+    justifyContent: 'flex-start',
+});
+
 
 interface IProps {
     id: string,
@@ -129,7 +134,7 @@ const TaskItem:React.FC<IProps> = ({id, value, completed, onDeletehandle, onTogg
                     (showButtons || !openEdit) && (
                     <ContainerSpaceBetween>
                         <FormGroup>
-                            <FormControlLabel control={<StyledSwitchIcon defaultChecked={completed} onClick={onToggle} disabled={openEdit}  />} label='Completed' />
+                            <FormControlLabel control={<StyledSwitchIcon checked={completed} onChange={onToggle} disabled={openEdit}  />} label='Completed' />
                         </FormGroup>
                         <IconButton edge="end" aria-label="edit" onClick={onToggleEdit} disabled={openEdit}>
                             <StyledEditIcon />
@@ -145,11 +150,11 @@ const TaskItem:React.FC<IProps> = ({id, value, completed, onDeletehandle, onTogg
             </Avatar>
             </ListItemAvatar>
             {(openEdit) ? (
-                <ContainerSpaceBetween>
+                <StyledContainerSpaceBetweenHalf>
                     <TextField variant="standard" value={taskTitle} onChange={onChangeText} autoFocus />
                     <StyledClearIcon onClick={cancelUpdate} />
                     <StyledCheckIcon onClick={acceptUpdate} />
-                </ContainerSpaceBetween>
+                </StyledContainerSpaceBetweenHalf>
             ) : (
             <ListItemText
                 primary={<Typography variant='h6'>{taskTxt}</Typography>}

@@ -5,6 +5,7 @@ const FlexEnd = styled('div')<{paddingSide?: boolean, bgColor?: string}>`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    width: 100%;
     padding: ${props => props.paddingSide ? '0 2rem' : 0};
     background-color: ${props => (props.bgColor) ? props.bgColor : 'none'};
 `;

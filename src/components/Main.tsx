@@ -7,6 +7,7 @@ import TaskItem from './TaskItem';
 import { Box } from '@mui/system';
 import { styled as MUIStyled } from '@mui/system';
 import { colors } from '../styles/colors';
+import {sortByName} from '../utils';
 
 
 const StyledBox = MUIStyled(Box)({
@@ -18,6 +19,7 @@ const StyledBox = MUIStyled(Box)({
 
 const Main:React.FC = () => {
     const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
+    const [sortName, setSortName] = useState<string>('');
     const dispatch = useAppDispatch();
     const {taskList}: ITaskList = useAppSelector(state => state.tasks);
     
@@ -35,20 +37,23 @@ const Main:React.FC = () => {
 
 
     const taskFiltered = useMemo(() => taskList.filter((item: ITask) => (isHideCompleted) ? item.completed !== isHideCompleted : item), [isHideCompleted, taskList]);
-    const tasks = useMemo(() => taskFiltered.map((item: ITask) => <TaskItem
+    const sortedTasks = sortByName(taskFiltered, sortName);
+    const tasks = useMemo(() => sortedTasks.map((item: ITask) => <TaskItem
                                                                 key={item.id}
                                                                 id={item.id}
                                                                 value={item.value}
                                                                 completed={item.completed}
                                                                 onDeletehandle={onDelete}
-                                                                onToggleTaskHandle={onToggleTask} />), [onDelete, onToggleTask, taskFiltered])
+                                                                onToggleTaskHandle={onToggleTask} />),
+                                                                // eslint-disable-next-line react-hooks/exhaustive-deps
+                                                                 [onDelete, onToggleTask, sortedTasks, sortName])
 
 
 
 
     return (
         <StyledBox className='main-component'>
-            <List list={tasks} onHideCompleted={onHideCompletedTasks} isHideCompleted={isHideCompleted}  />
+            <List list={tasks} onHideCompleted={onHideCompletedTasks} isHideCompleted={isHideCompleted} onHandleSort={setSortName}  />
         </StyledBox>
     )
 }

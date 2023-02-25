@@ -9,3 +9,8 @@ export interface ITaskList {
 }
 
 export type ITaskModifiedText = Omit<ITask, "completed">
+
+export const SORT_TYPE = {
+INC: 'inc',
+DEC: 'dec'
+}

@@ -6,11 +6,36 @@ import Typography from '@mui/material/Typography';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { styled as MUIStyled } from '@mui/system';
+import { colors } from '@mui/material';
+import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
+import { SORT_TYPE } from '../types';
 
 
 const ListWrapper = styled('div')`
-    display: 'block';
+    display: block;
+    width: 100%;
 `;
+
+const FlexWrapper = styled('div')`
+    display: flex;
+`;
+
+const StyledArrowUp = MUIStyled(ArrowUpwardIcon)({
+    ":hover": {
+        color: colors.green,
+        cursor: 'pointer'
+    }
+});
+
+const StyledArrowDown = MUIStyled(ArrowDownwardIcon)({
+    ":hover": {
+        color: colors.green,
+        cursor: 'pointer'
+    }
+});
 
 const ShadowedContainerCenter = styled(ContainerCenter)`
     box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgb(0 0 0 / 0%);
@@ -24,34 +49,42 @@ const ShadowedContainerCenter = styled(ContainerCenter)`
 interface IProps {
     list: React.ReactNode[],
     onHideCompleted: () => void,
-    isHideCompleted: boolean
+    isHideCompleted: boolean,
+    onHandleSort: (sort: string) => void
 }
 
-const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted}) => {
+const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted, onHandleSort}) => {
     
 
     const onHideCompletedTasks = useCallback(() => {
         onHideCompleted();
     }, [onHideCompleted]);
+
+    const onSortInc = useCallback(() => {
+        onHandleSort(SORT_TYPE.INC);
+    }, [onHandleSort]);
+    const onSortDec = useCallback(() => {
+        onHandleSort(SORT_TYPE.DEC);
+    }, [onHandleSort]);
   
-    if (!list.length) {
-        return (
-            <ShadowedContainerCenter>
-                <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
-                        No Tasks
-                </Typography>
-            </ShadowedContainerCenter>
-        )
-    }
     return (
         <ListWrapper>
             <ShadowedContainerCenter>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox checked={isHideCompleted} onChange={onHideCompletedTasks} />} label="Hide completed" />
-                </FormGroup>
-                <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
-                    Tasks List
-                </Typography>
+                <ContainerSpaceBetween>
+                    <FormGroup>
+                        <FormControlLabel control={<Checkbox checked={isHideCompleted} onChange={onHideCompletedTasks} />} label="Hide completed" />
+                    </FormGroup>
+
+                    <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
+                        List
+                    </Typography>
+
+                    <FlexWrapper>
+                        <StyledArrowUp onClick={onSortInc} />
+                        <StyledArrowDown onClick={onSortDec} />
+                        By Name
+                    </FlexWrapper>
+                </ContainerSpaceBetween>
           </ShadowedContainerCenter>
           <Demo>
             <List dense>
