@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import FlexContainer from '../ui/FlexContainer';
 import ContainerCenter from '../ui/ContainerCenter';
 
 
-const ListWrapper = styled(FlexContainer)`
+const ListWrapper = styled(ContainerCenter)`
     height: 10vh;
-    justify-content: center;
-    display: flex;
     flex-direction: column;
     background-color: ${props => props.theme.bg};
 `;

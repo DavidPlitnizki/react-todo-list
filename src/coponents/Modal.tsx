@@ -1,13 +1,14 @@
 import React, {useCallback, useRef} from 'react';
 import Modal from 'styled-react-modal'
 import ButtonComponent from '../ui/ButtonComponent';
-import FlexContainer from '../ui/FlexContainer';
+// import FlexContainer from '../ui/FlexContainer';
 import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
 import ContainerCenter from '../ui/ContainerCenter';
 import { useAppDispatch } from '../store/hooks';
 import { addTask } from '../features/task/taskSlice';
 import { ITask } from '../types';
 import uuid from 'react-uuid';
+import { Box } from '@mui/system';
 
 
 const StyledModal = Modal.styled`
@@ -60,25 +61,25 @@ const StyledModal = Modal.styled`
         <StyledModal
           isOpen={isOpen}>
 
-        <FlexContainer>
+        <Box>
             <ContainerCenter>
                 <h2>New Task</h2>
             </ContainerCenter>
-        </FlexContainer>
+        </Box>
 
-        <FlexContainer>
+        <Box>
             <ContainerCenter>
                 <input type="text" name="task" id="task" placeholder='Create Task' ref={inputTaskRef} />
             </ContainerCenter>
-        </FlexContainer>
+        </Box>
           
 
-        <FlexContainer>
+        <Box>
             <ContainerSpaceBetween>
                 <ButtonComponent onHandle={onCancel} text="Cancel" bgColor='danger' />
                 <ButtonComponent onHandle={onCreateTask} text="New Task" />
             </ContainerSpaceBetween>
-        </FlexContainer>
+        </Box>
 
         </StyledModal>
       </div>

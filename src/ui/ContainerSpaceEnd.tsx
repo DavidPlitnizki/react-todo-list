@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SpaceBetween = styled('div')<{paddingSide?: boolean, bgColor?: string}>`
+const FlexEnd = styled('div')<{paddingSide?: boolean, bgColor?: string}>`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: ${props => props.paddingSide ? '0 2rem' : 0};
     background-color: ${props => (props.bgColor) ? props.bgColor : 'none'};
@@ -15,12 +15,11 @@ interface IProps {
     bgColor?: string
 }
 
-const ContainerSpaceBetween:React.FC<IProps> = ({children, className, bgColor}) => {
-    console.log("bg: ", bgColor)
+const ContainerSpaceEnd:React.FC<IProps> = ({children, className, bgColor}) => {
     return (
-        <SpaceBetween className={className} paddingSide bgColor={bgColor}>
+        <FlexEnd className={className} paddingSide bgColor={bgColor}>
             {children}
-        </SpaceBetween>
+        </FlexEnd>
     )   
 }
-export default ContainerSpaceBetween;
+export default ContainerSpaceEnd;
