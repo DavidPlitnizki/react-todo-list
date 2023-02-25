@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import Header from './coponents/Header';
+import Header from './components/Header';
 import { colors } from './styles/colors';
-import TaskModal from './coponents/Modal';
-import Main from './coponents/Main';
+import TaskModal from './components/Modal';
+import Main from './components/Main';
 import CssBaseline from '@mui/material/CssBaseline';
 
 
@@ -16,10 +16,10 @@ const theme = {
   ...colors
 };
 
+
+
 const App: React.FC = () => {
 const [isOpenTaskModal, setIsOpenTaskModal] = useState<boolean>(false);
-
-
 
   return (
     <>

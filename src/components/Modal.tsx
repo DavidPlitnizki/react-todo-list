@@ -1,4 +1,4 @@
-import React, {useRef, useCallback} from 'react';
+import React, {useRef, useCallback, useState} from 'react';
 import { useAppDispatch } from '../store/hooks';
 import { addTask } from '../features/task/taskSlice';
 import { ITask } from '../types';
@@ -13,6 +13,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { colors } from '../styles/colors';
+import SnackbarAler from '../ui/SnackbarAlert';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -24,6 +26,9 @@ const Transition = React.forwardRef(function Transition(
   });
 
 
+  const StyledCanceBtn = MUIStyled(Button)({
+    color: colors.danger
+});
     
   const BoxContent = MUIStyled(Box)`
     width: 400px;
@@ -40,11 +45,13 @@ const Transition = React.forwardRef(function Transition(
   }
   
  const TaskModal:React.FC<IProps> = ({isOpen, oncloseModal}) => {
-    const inputTaskRef = useRef<HTMLInputElement | null | any>(null);
+  const [isOpenSnackbar, setIsOpenSnackbar] = useState<boolean>(false);
+  const [errorMsg, setErrorMSg] = useState<string>('');
+    const inputTaskRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
 
     const onCreateTask = useCallback(() => {
-        if (inputTaskRef.current?.value) {
+        if (inputTaskRef.current?.value.length) {
             const newTask:ITask = {
                 value: inputTaskRef.current?.value,
                 id: uuid(),
@@ -52,8 +59,11 @@ const Transition = React.forwardRef(function Transition(
             }
             dispatch(addTask(newTask));
             clearInput();
+            oncloseModal(false);
+        } else {
+          setIsOpenSnackbar(true);
+          setErrorMSg('CAN NOT BE EMPTY!!!');
         }
-        oncloseModal(false);
     }, [dispatch, oncloseModal])
 
     const clearInput = () => {
@@ -63,34 +73,37 @@ const Transition = React.forwardRef(function Transition(
     }
 
     const onCancel = useCallback(() => {
+      if (inputTaskRef.current) {
         inputTaskRef.current.value = "";
-        oncloseModal(false);
+      }
+      oncloseModal(false);
     }, [oncloseModal])
 
     return (
     <>
-    <Dialog
-        open={isOpen}
-        TransitionComponent={Transition}
-        keepMounted
-        aria-describedby="alert-dialog-create-task"
-      >
-        <BoxContent style={{width: '400px'}}>
-            <DialogTitle>{"Create New Task"}</DialogTitle>
-            <DialogContent>
-                <TextFieldLg label="Task Description"
-                            type='text'
-                            margin='dense'
-                            variant='standard'
-                            inputRef={inputTaskRef} />
-            </DialogContent>
-            <DialogActions>
-            <Button onClick={onCancel}>Cancel</Button>
-            <Button onClick={onCreateTask}>Add</Button>
-            </DialogActions>
-        </BoxContent>
-      </Dialog>
-        </>
+      <Dialog
+          open={isOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          aria-describedby="alert-dialog-create-task"
+        >
+          <BoxContent>
+              <DialogTitle>{"Create New Task"}</DialogTitle>
+              <DialogContent>
+                  <TextFieldLg label="Task title"
+                              type='text'
+                              margin='dense'
+                              variant='standard'
+                              inputRef={inputTaskRef} />
+              </DialogContent>
+              <DialogActions>
+              <StyledCanceBtn onClick={onCancel}>Cancel</StyledCanceBtn>
+              <Button onClick={onCreateTask} variant="contained">Add</Button>
+              </DialogActions>
+          </BoxContent>
+        </Dialog>
+        <SnackbarAler isOpen={isOpenSnackbar} handleClose={setIsOpenSnackbar} type='error' text={errorMsg} />
+      </>
     )
  }
 

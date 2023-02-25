@@ -146,7 +146,7 @@ const TaskItem:React.FC<IProps> = ({id, value, completed, onDeletehandle, onTogg
             </ListItemAvatar>
             {(openEdit) ? (
                 <ContainerSpaceBetween>
-                    <TextField id="standard-basic" variant="standard" value={taskTitle} onChange={onChangeText} autoFocus />
+                    <TextField variant="standard" value={taskTitle} onChange={onChangeText} autoFocus />
                     <StyledClearIcon onClick={cancelUpdate} />
                     <StyledCheckIcon onClick={acceptUpdate} />
                 </ContainerSpaceBetween>
