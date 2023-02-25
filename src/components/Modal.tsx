@@ -18,6 +18,7 @@ import SnackbarAler from '../ui/SnackbarAlert';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
 
 
 const Transition = React.forwardRef(function Transition(
@@ -31,6 +32,7 @@ const Transition = React.forwardRef(function Transition(
 
 
   const StyledCanceBtn = MUIStyled(Button)({
+    marginRight: '1rem',
     color: colors.danger
 });
     
@@ -108,12 +110,16 @@ const Transition = React.forwardRef(function Transition(
                               inputRef={inputTaskRef} />
               </DialogContent>
               <DialogActions>
-              <FormGroup>
-                  <FormControlLabel control={<Checkbox checked={isMultiAdd} onChange={onSetIsMultiAddTask} />} label="Multi" />
-                </FormGroup>
-                <StyledCanceBtn onClick={onCancel}>Cancel</StyledCanceBtn>
-                <Button onClick={onCreateTask} variant="contained">Add</Button>
-              </DialogActions>
+                <ContainerSpaceBetween>
+                  <FormGroup>
+                      <FormControlLabel control={<Checkbox checked={isMultiAdd} onChange={onSetIsMultiAddTask} />} label="Multi task" />
+                    </FormGroup>
+                    <div>
+                      <StyledCanceBtn onClick={onCancel}>Close</StyledCanceBtn>
+                      <Button onClick={onCreateTask} variant="contained">Add</Button>
+                    </div>
+                  </ContainerSpaceBetween>
+                </DialogActions>
           </BoxContent>
         </Dialog>
         <SnackbarAler isOpen={isOpenSnackbar} handleClose={setIsOpenSnackbar} type='error' text={errorMsg} />

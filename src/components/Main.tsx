@@ -37,6 +37,7 @@ const Main:React.FC = () => {
 
 
     const taskFiltered = useMemo(() => taskList.filter((item: ITask) => (isHideCompleted) ? item.completed !== isHideCompleted : item), [isHideCompleted, taskList]);
+    const amountfiltered = useMemo(() => Math.abs(taskList.length - taskFiltered.length), [taskFiltered.length, taskList.length]);
     const sortedTasks = sortByName(taskFiltered, sortName);
     const tasks = useMemo(() => sortedTasks.map((item: ITask) => <TaskItem
                                                                 key={item.id}
@@ -50,10 +51,14 @@ const Main:React.FC = () => {
 
 
 
-
+    console.log(amountfiltered)
     return (
         <StyledBox className='main-component'>
-            <List list={tasks} onHideCompleted={onHideCompletedTasks} isHideCompleted={isHideCompleted} onHandleSort={setSortName}  />
+            <List list={tasks}
+                onHideCompleted={onHideCompletedTasks}
+                isHideCompleted={isHideCompleted}
+                onHandleSort={setSortName}
+                amountfiltered={amountfiltered} />
         </StyledBox>
     )
 }

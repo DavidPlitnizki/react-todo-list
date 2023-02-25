@@ -9,7 +9,7 @@ import Checkbox from '@mui/material/Checkbox';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { styled as MUIStyled } from '@mui/system';
-import { colors } from '@mui/material';
+import { Badge, colors } from '@mui/material';
 import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
 import { SORT_TYPE } from '../types';
 
@@ -50,10 +50,11 @@ interface IProps {
     list: React.ReactNode[],
     onHideCompleted: () => void,
     isHideCompleted: boolean,
-    onHandleSort: (sort: string) => void
+    onHandleSort: (sort: string) => void,
+    amountfiltered: number
 }
 
-const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted, onHandleSort}) => {
+const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted, onHandleSort, amountfiltered}) => {
     
 
     const onHideCompletedTasks = useCallback(() => {
@@ -72,7 +73,9 @@ const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted
             <ShadowedContainerCenter>
                 <ContainerSpaceBetween>
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox checked={isHideCompleted} onChange={onHideCompletedTasks} />} label="Hide completed" />
+                        <Badge badgeContent={amountfiltered} color="primary">
+                            <FormControlLabel control={<Checkbox checked={isHideCompleted} onChange={onHideCompletedTasks} />} label="Hide completed" />    
+                        </Badge>
                     </FormGroup>
 
                     <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
