@@ -15,6 +15,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { colors } from '../styles/colors';
 import SnackbarAler from '../ui/SnackbarAlert';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -46,6 +50,7 @@ const Transition = React.forwardRef(function Transition(
   
  const TaskModal:React.FC<IProps> = ({isOpen, oncloseModal}) => {
   const [isOpenSnackbar, setIsOpenSnackbar] = useState<boolean>(false);
+  const [isMultiAdd, setIsMultiAdd] = useState<boolean>(false);
   const [errorMsg, setErrorMSg] = useState<string>('');
     const inputTaskRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
@@ -59,12 +64,14 @@ const Transition = React.forwardRef(function Transition(
             }
             dispatch(addTask(newTask));
             clearInput();
-            oncloseModal(false);
+            if (!isMultiAdd) {
+              oncloseModal(false);  
+            }
         } else {
           setIsOpenSnackbar(true);
           setErrorMSg('CAN NOT BE EMPTY!!!');
         }
-    }, [dispatch, oncloseModal])
+    }, [dispatch, isMultiAdd, oncloseModal])
 
     const clearInput = () => {
         if (inputTaskRef.current) {
@@ -78,6 +85,10 @@ const Transition = React.forwardRef(function Transition(
       }
       oncloseModal(false);
     }, [oncloseModal])
+
+    const onSetIsMultiAddTask = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setIsMultiAdd(!isMultiAdd);
+    }
 
     return (
     <>
@@ -97,8 +108,11 @@ const Transition = React.forwardRef(function Transition(
                               inputRef={inputTaskRef} />
               </DialogContent>
               <DialogActions>
-              <StyledCanceBtn onClick={onCancel}>Cancel</StyledCanceBtn>
-              <Button onClick={onCreateTask} variant="contained">Add</Button>
+              <FormGroup>
+                  <FormControlLabel control={<Checkbox checked={isMultiAdd} onChange={onSetIsMultiAddTask} />} label="Multi" />
+                </FormGroup>
+                <StyledCanceBtn onClick={onCancel}>Cancel</StyledCanceBtn>
+                <Button onClick={onCreateTask} variant="contained">Add</Button>
               </DialogActions>
           </BoxContent>
         </Dialog>
