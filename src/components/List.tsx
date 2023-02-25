@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import ContainerCenter from '../ui/ContainerCenter';
 import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
@@ -11,7 +11,10 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { styled as MUIStyled } from '@mui/system';
 import { Badge, colors } from '@mui/material';
 import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
+import TextField from '@mui/material/TextField';
 import { SORT_TYPE } from '../types';
+import useDebounce from '../hooks/useDebounce';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 
 const ListWrapper = styled('div')`
@@ -23,6 +26,13 @@ const FlexWrapper = styled('div')`
     display: flex;
 `;
 
+const FlexCenter = styled('div')`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+`;
+
 const StyledArrowUp = MUIStyled(ArrowUpwardIcon)({
     ":hover": {
         color: colors.green,
@@ -31,6 +41,12 @@ const StyledArrowUp = MUIStyled(ArrowUpwardIcon)({
 });
 
 const StyledArrowDown = MUIStyled(ArrowDownwardIcon)({
+    ":hover": {
+        color: colors.green,
+        cursor: 'pointer'
+    }
+});
+const StyledSearchIcon = MUIStyled(ManageSearchIcon)({
     ":hover": {
         color: colors.green,
         cursor: 'pointer'
@@ -51,15 +67,21 @@ interface IProps {
     onHideCompleted: () => void,
     isHideCompleted: boolean,
     onHandleSort: (sort: string) => void,
-    amountfiltered: number
+    amountfiltered: number,
+    setIsShowByName: (name: string) => void
 }
 
-const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted, onHandleSort, amountfiltered}) => {
-    
-
+const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted, onHandleSort, amountfiltered, setIsShowByName}) => {
+    const [sortString, setSortString] = useState<string>('');
+    const debouncedValue = useDebounce<string>(sortString, 500)
     const onHideCompletedTasks = useCallback(() => {
         onHideCompleted();
     }, [onHideCompleted]);
+
+  useEffect(() => {
+    setIsShowByName(sortString);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedValue])
 
     const onSortInc = useCallback(() => {
         onHandleSort(SORT_TYPE.INC);
@@ -67,6 +89,11 @@ const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted
     const onSortDec = useCallback(() => {
         onHandleSort(SORT_TYPE.DEC);
     }, [onHandleSort]);
+
+    const onChangeHandle = (e: any) => {
+        const text = e.target.value;
+        setSortString(text);
+    }
   
     return (
         <ListWrapper>
@@ -88,7 +115,11 @@ const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted
                         By Name
                     </FlexWrapper>
                 </ContainerSpaceBetween>
-          </ShadowedContainerCenter>
+            </ShadowedContainerCenter>
+          <FlexCenter>
+            <TextField onChange={onChangeHandle} variant='standard' label='Search' />
+            <StyledSearchIcon />
+          </FlexCenter>
           <Demo>
             <List dense>
               {list}

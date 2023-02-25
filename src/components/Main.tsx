@@ -19,6 +19,7 @@ const StyledBox = MUIStyled(Box)({
 
 const Main:React.FC = () => {
     const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
+    const [isShowByName, setIsShowByName] = useState<string>('');
     const [sortName, setSortName] = useState<string>('');
     const dispatch = useAppDispatch();
     const {taskList}: ITaskList = useAppSelector(state => state.tasks);
@@ -37,8 +38,10 @@ const Main:React.FC = () => {
 
 
     const taskFiltered = useMemo(() => taskList.filter((item: ITask) => (isHideCompleted) ? item.completed !== isHideCompleted : item), [isHideCompleted, taskList]);
+    const taskFilteredByName = useMemo(() => taskFiltered.filter((item: ITask) => (isShowByName.length) ? item.value.includes(isShowByName) : item), [isShowByName, taskFiltered]);
     const amountfiltered = useMemo(() => Math.abs(taskList.length - taskFiltered.length), [taskFiltered.length, taskList.length]);
-    const sortedTasks = sortByName(taskFiltered, sortName);
+    const sortedTasks = sortByName(taskFilteredByName, sortName);
+    
     const tasks = useMemo(() => sortedTasks.map((item: ITask) => <TaskItem
                                                                 key={item.id}
                                                                 id={item.id}
@@ -51,14 +54,14 @@ const Main:React.FC = () => {
 
 
 
-    console.log(amountfiltered)
     return (
         <StyledBox className='main-component'>
             <List list={tasks}
                 onHideCompleted={onHideCompletedTasks}
                 isHideCompleted={isHideCompleted}
                 onHandleSort={setSortName}
-                amountfiltered={amountfiltered} />
+                amountfiltered={amountfiltered}
+                setIsShowByName={setIsShowByName} />
         </StyledBox>
     )
 }
