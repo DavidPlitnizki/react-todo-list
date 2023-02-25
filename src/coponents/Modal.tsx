@@ -1,28 +1,38 @@
-import React, {useCallback, useRef} from 'react';
-import Modal from 'styled-react-modal'
-import ButtonComponent from '../ui/ButtonComponent';
-// import FlexContainer from '../ui/FlexContainer';
-import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
-import ContainerCenter from '../ui/ContainerCenter';
+import React, {useRef, useCallback} from 'react';
 import { useAppDispatch } from '../store/hooks';
 import { addTask } from '../features/task/taskSlice';
 import { ITask } from '../types';
 import uuid from 'react-uuid';
 import { Box } from '@mui/system';
+import { styled as MUIStyled } from '@mui/system';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import { TransitionProps } from '@mui/material/transitions';
+import Slide from '@mui/material/Slide';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+      children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+  ) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 
-const StyledModal = Modal.styled`
-    width: 20rem;
-    height: 20rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #000;
-    border-radius: 20px;
-    border: 1px solid #373635;
-    display: flex;
-    flex-direction: column;
+    
+  const BoxContent = MUIStyled(Box)`
+    width: 400px;
+    heigh: 300px;
   `;
+
+  const TextFieldLg = MUIStyled(TextField)({
+    width: '100%'
+  });
 
   interface IProps {
     isOpen: boolean,
@@ -33,7 +43,7 @@ const StyledModal = Modal.styled`
     const inputTaskRef = useRef<HTMLInputElement | null | any>(null);
     const dispatch = useAppDispatch();
 
-    const onCreateTask = () => {
+    const onCreateTask = useCallback(() => {
         if (inputTaskRef.current?.value) {
             const newTask:ITask = {
                 value: inputTaskRef.current?.value,
@@ -44,7 +54,7 @@ const StyledModal = Modal.styled`
             clearInput();
         }
         oncloseModal(false);
-    }
+    }, [dispatch, oncloseModal])
 
     const clearInput = () => {
         if (inputTaskRef.current) {
@@ -53,36 +63,34 @@ const StyledModal = Modal.styled`
     }
 
     const onCancel = useCallback(() => {
+        inputTaskRef.current.value = "";
         oncloseModal(false);
     }, [oncloseModal])
 
     return (
-    <div>
-        <StyledModal
-          isOpen={isOpen}>
-
-        <Box>
-            <ContainerCenter>
-                <h2>New Task</h2>
-            </ContainerCenter>
-        </Box>
-
-        <Box>
-            <ContainerCenter>
-                <input type="text" name="task" id="task" placeholder='Create Task' ref={inputTaskRef} />
-            </ContainerCenter>
-        </Box>
-          
-
-        <Box>
-            <ContainerSpaceBetween>
-                <ButtonComponent onHandle={onCancel} text="Cancel" bgColor='danger' />
-                <ButtonComponent onHandle={onCreateTask} text="New Task" />
-            </ContainerSpaceBetween>
-        </Box>
-
-        </StyledModal>
-      </div>
+    <>
+    <Dialog
+        open={isOpen}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-create-task"
+      >
+        <BoxContent style={{width: '400px'}}>
+            <DialogTitle>{"Create New Task"}</DialogTitle>
+            <DialogContent>
+                <TextFieldLg label="Task Description"
+                            type='text'
+                            margin='dense'
+                            variant='standard'
+                            inputRef={inputTaskRef} />
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={onCancel}>Cancel</Button>
+            <Button onClick={onCreateTask}>Add</Button>
+            </DialogActions>
+        </BoxContent>
+      </Dialog>
+        </>
     )
  }
 

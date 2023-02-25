@@ -1,5 +1,6 @@
 export const colors = {
     bg: '#089de3',
+    whiteBg: '#fefefe',
     orange: '#ff9c3c',
     green: '#1f751f',
     danger: '#DD403A',

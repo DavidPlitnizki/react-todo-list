@@ -1,32 +1,52 @@
 import React from 'react';
-import styled from 'styled-components';
 import ContainerCenter from '../ui/ContainerCenter';
+import { styled } from '@mui/material/styles';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
 
 
-const ListWrapper = styled(ContainerCenter)`
-    height: 10vh;
-    flex-direction: column;
-    background-color: ${props => props.theme.bg};
+const ListWrapper = styled('div')`
+    display: 'block';
 `;
 
-const ListContentWrapper = styled(ContainerCenter)`
-    width: 60%;
-    margin: auto 0;
+const ShadowedContainerCenter = styled(ContainerCenter)`
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgb(0 0 0 / 0%);
+    border-radius: 10px;
 `;
+  
+  const Demo = styled('div')(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+  }));
 
 interface IProps {
-    list: React.ReactNode
+    list: React.ReactNode[]
 }
 
-const List:React.FC<IProps> = ({list}) => {
-    console.log("list: ", list)
+const ListItems:React.FC<IProps> = ({list = []}) => {
+  
+    if (!list.length) {
+        return (
+            <ShadowedContainerCenter>
+                <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
+                        No Tasks
+                </Typography>
+            </ShadowedContainerCenter>
+        )
+    }
     return (
         <ListWrapper>
-            <ListContentWrapper>
-                {list}
-            </ListContentWrapper>
+            <ShadowedContainerCenter>
+                <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
+                    Tasks List
+                </Typography>
+          </ShadowedContainerCenter>
+          <Demo>
+            <List dense>
+              {list}
+            </List>
+          </Demo>
         </ListWrapper>
     )
 }
 
-export default List;
+export default ListItems;

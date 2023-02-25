@@ -4,7 +4,17 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { ITask, ITaskList } from '../types';
 import List from './List';
 import TaskItem from './TaskItem';
+import { Box } from '@mui/system';
+import { styled as MUIStyled } from '@mui/system';
+import { colors } from '../styles/colors';
 
+
+const StyledBox = MUIStyled(Box)({
+    backgroundColor: colors.whiteBg,
+    width: 'clamp(400px, 50%, 800px)',
+    margin: '0 auto',
+    display: 'block'
+})
 
 const Main:React.FC = () => {
     const dispatch = useAppDispatch();
@@ -31,9 +41,9 @@ const Main:React.FC = () => {
 
 
     return (
-        <div>
+        <StyledBox className='main-component'>
             <List list={tasks} />
-        </div>
+        </StyledBox>
     )
 }
 

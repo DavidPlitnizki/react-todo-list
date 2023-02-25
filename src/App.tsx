@@ -2,15 +2,15 @@ import React, {useState} from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Header from './coponents/Header';
 import { colors } from './styles/colors';
-import { ModalProvider } from 'styled-react-modal'
-// import TaskModal from './coponents/Modal';
-// import Main from './coponents/Main';
+import TaskModal from './coponents/Modal';
+import Main from './coponents/Main';
 import CssBaseline from '@mui/material/CssBaseline';
 
 
 const Layout = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
+  height: 100vh; */
 `;
 
 const theme = {
@@ -18,7 +18,7 @@ const theme = {
 };
 
 const App: React.FC = () => {
-const [, setIsOpenTaskModal] = useState<boolean>(false);
+const [isOpenTaskModal, setIsOpenTaskModal] = useState<boolean>(false);
 
 
 
@@ -28,11 +28,9 @@ const [, setIsOpenTaskModal] = useState<boolean>(false);
     <ThemeProvider theme={theme}>
       <Layout>
         <Header onOpenTaskModal={setIsOpenTaskModal} />
-        {/* <Main /> */}
+        <Main />
       </Layout>
-      <ModalProvider>
-        {/* <TaskModal isOpen={isOpenTaskModal} oncloseModal={setIsOpenTaskModal} /> */}
-      </ModalProvider>
+      <TaskModal isOpen={isOpenTaskModal} oncloseModal={setIsOpenTaskModal} />
     </ThemeProvider>
     </>
   )

@@ -13,6 +13,7 @@ const FabWrapper = styled('div')`
     right: 0;
     transform: translate(-50%, 70%);
     top: 0;
+    z-index: 2;
 `;
 
 const OwnFab = MUIStyled(Fab)({
