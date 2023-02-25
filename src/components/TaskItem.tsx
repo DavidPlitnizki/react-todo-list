@@ -1,28 +1,29 @@
 import React, {useCallback, useState} from 'react';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Avatar from '@mui/material/Avatar';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import styled from 'styled-components';
-import { styled as MUIStyled } from '@mui/system';
-import { colors } from '../styles/colors';
-import EditIcon from '@mui/icons-material/Edit';
 import TextField from '@mui/material/TextField';
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
-import { useAppDispatch } from '../store/hooks';
+import Typography from '@mui/material/Typography';
+import { styled as MUIStyled } from '@mui/system';
+import styled from 'styled-components';
+
 import { updateTaskText } from '../features/task/taskSlice';
-import { ITaskModifiedText } from '../types';
 import useMediaQuery from '../hooks/useMediaQuery';
+import { useAppDispatch } from '../store/hooks';
+import { colors } from '../styles/colors';
+import { ITaskModifiedText } from '../types';
+import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
 
 
 const TextLign = styled('span')`

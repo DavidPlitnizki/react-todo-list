@@ -1,11 +1,12 @@
 import React from 'react';
-import ContainerCenter from '../ui/ContainerCenter';
-import { Box } from '@mui/system';
-import {colors} from '../styles/colors';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import styled from 'styled-components';
+import Fab from '@mui/material/Fab';
+import { Box } from '@mui/system';
 import { styled as MUIStyled } from '@mui/system';
+import styled from 'styled-components';
+
+import {colors} from '../styles/colors';
+import ContainerCenter from '../ui/ContainerCenter';
 
 const FabWrapper = styled('div')`
     position: absolute;

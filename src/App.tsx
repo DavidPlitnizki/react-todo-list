@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import Header from './components/Header';
-import { colors } from './styles/colors';
-import TaskModal from './components/Modal';
-import Main from './components/Main';
 import CssBaseline from '@mui/material/CssBaseline';
+import styled, { ThemeProvider } from 'styled-components';
+
+import Header from './components/Header';
+import Main from './components/Main';
+import TaskModal from './components/Modal';
+import { colors } from './styles/colors';
 
 
 const Layout = styled.div`

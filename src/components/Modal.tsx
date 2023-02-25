@@ -1,24 +1,25 @@
-import React, {useRef, useCallback, useState} from 'react';
-import { useAppDispatch } from '../store/hooks';
-import { addTask } from '../features/task/taskSlice';
-import { ITask } from '../types';
+import React, {useCallback, useRef, useState} from 'react';
 import uuid from 'react-uuid';
-import { Box } from '@mui/system';
-import { styled as MUIStyled } from '@mui/system';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { TransitionProps } from '@mui/material/transitions';
-import Slide from '@mui/material/Slide';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { colors } from '../styles/colors';
-import SnackbarAler from '../ui/SnackbarAlert';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import Slide from '@mui/material/Slide';
+import TextField from '@mui/material/TextField';
+import { TransitionProps } from '@mui/material/transitions';
+import { Box } from '@mui/system';
+import { styled as MUIStyled } from '@mui/system';
+
+import { addTask } from '../features/task/taskSlice';
+import { useAppDispatch } from '../store/hooks';
+import { colors } from '../styles/colors';
+import { ITask } from '../types';
 import ContainerSpaceBetween from '../ui/ContainerSpaceBetween';
+import SnackbarAler from '../ui/SnackbarAlert';
 
 
 const Transition = React.forwardRef(function Transition(
