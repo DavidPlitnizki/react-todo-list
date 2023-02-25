@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import ContainerCenter from '../ui/ContainerCenter';
 import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 
 const ListWrapper = styled('div')`
@@ -19,10 +22,17 @@ const ShadowedContainerCenter = styled(ContainerCenter)`
   }));
 
 interface IProps {
-    list: React.ReactNode[]
+    list: React.ReactNode[],
+    onHideCompleted: () => void,
+    isHideCompleted: boolean
 }
 
-const ListItems:React.FC<IProps> = ({list = []}) => {
+const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted}) => {
+    
+
+    const onHideCompletedTasks = useCallback(() => {
+        onHideCompleted();
+    }, [onHideCompleted]);
   
     if (!list.length) {
         return (
@@ -36,6 +46,9 @@ const ListItems:React.FC<IProps> = ({list = []}) => {
     return (
         <ListWrapper>
             <ShadowedContainerCenter>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox checked={isHideCompleted} onChange={onHideCompletedTasks} />} label="Hide completed" />
+                </FormGroup>
                 <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
                     Tasks List
                 </Typography>

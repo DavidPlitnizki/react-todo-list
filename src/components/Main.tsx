@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import { removeTask, toggleTask } from '../features/task/taskSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { ITask, ITaskList } from '../types';
@@ -17,31 +17,38 @@ const StyledBox = MUIStyled(Box)({
 })
 
 const Main:React.FC = () => {
+    const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const {taskList}: ITaskList = useAppSelector(state => state.tasks);
     
-    const onDelete = (id: string) => {
+    const onDelete = useCallback((id: string) => {
         dispatch((removeTask(id)))
-    }
+    }, [dispatch])
 
-    const onToggleTask = (id: string) => {
+    const onToggleTask = useCallback((id: string) => {
         dispatch((toggleTask(id)))
-    }
+    }, [dispatch])
 
-    const tasks = taskList.map((item: ITask) => <TaskItem
-                                                    key={item.id}
-                                                    id={item.id}
-                                                    value={item.value}
-                                                    completed={item.completed}
-                                                    onDeletehandle={onDelete}
-                                                    onToggleTaskHandle={onToggleTask} />);
+    const onHideCompletedTasks = useCallback(() => {
+        setIsHideCompleted(!isHideCompleted);
+    }, [isHideCompleted])
+
+
+    const taskFiltered = useMemo(() => taskList.filter((item: ITask) => (isHideCompleted) ? item.completed !== isHideCompleted : item), [isHideCompleted, taskList]);
+    const tasks = useMemo(() => taskFiltered.map((item: ITask) => <TaskItem
+                                                                key={item.id}
+                                                                id={item.id}
+                                                                value={item.value}
+                                                                completed={item.completed}
+                                                                onDeletehandle={onDelete}
+                                                                onToggleTaskHandle={onToggleTask} />), [onDelete, onToggleTask, taskFiltered])
 
 
 
 
     return (
         <StyledBox className='main-component'>
-            <List list={tasks} />
+            <List list={tasks} onHideCompleted={onHideCompletedTasks} isHideCompleted={isHideCompleted}  />
         </StyledBox>
     )
 }
