@@ -1,7 +1,7 @@
-import { SORT_TYPE } from '../types';
+import { ITask, SORT_TYPE } from '../types';
 
-export const sortByName = (arr:any = [], sortName: string) => {
-     return arr.sort((a: any, b: any) => {
+export const sortByName = (arr:ITask[] = [], sortName: string) => {
+     return arr.sort((a: ITask, b: ITask) => {
         if (sortName === SORT_TYPE.INC) {
             return (a.value > b.value) ? 1 : -1;
         }
