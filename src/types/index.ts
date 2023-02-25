@@ -7,3 +7,5 @@ export interface ITask {
 export interface ITaskList {
   taskList: ITask[]
 }
+
+export type ITaskModifiedText = Omit<ITask, "completed">

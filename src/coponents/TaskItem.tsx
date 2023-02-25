@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
@@ -15,6 +15,14 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import styled from 'styled-components';
 import { styled as MUIStyled } from '@mui/system';
 import { colors } from '../styles/colors';
+import EditIcon from '@mui/icons-material/Edit';
+import TextField from '@mui/material/TextField';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
+import { useAppDispatch } from '../store/hooks';
+import { updateTaskText } from '../features/task/taskSlice';
+import { ITaskModifiedText } from '../types';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 
 const TextLign = styled('span')`
@@ -37,51 +45,118 @@ const StyledSwitchIcon = MUIStyled(Switch)({
       },
 });
 
+const StyledEditIcon = MUIStyled(EditIcon)({
+    transition: 'color .15s linear',
+    ":hover": {
+        color: colors.green
+    }
+});
+
+const StyledCheckIcon = MUIStyled(CheckIcon)({
+    transition: 'color .15s linear',
+    ":hover": {
+        color: colors.green,
+        cursor: 'pointer'
+    }
+});
+
+const StyledClearIcon = MUIStyled(ClearIcon)({
+    transition: 'color .15s linear',
+    ":hover": {
+        color: colors.danger,
+        cursor: 'pointer'
+    }
+});
+
+const StyledListItem = MUIStyled(ListItem)({
+    transition: 'all .15s linear',
+    height: '80px'
+});
+
 
 interface IProps {
     id: string,
     value: string,
     completed: boolean,
     onDeletehandle: (id: string) => void,
-    onUpdatehandle: (id: string) => void
+    onToggleTaskHandle: (id: string) => void
 }
 
-const TaskItem:React.FC<IProps> = ({id, value, completed, onDeletehandle, onUpdatehandle}) => {
+const TaskItem:React.FC<IProps> = ({id, value, completed, onDeletehandle, onToggleTaskHandle}) => {
+    const dispatch = useAppDispatch();
+    const showButtons = useMediaQuery('(min-width: 850px)')
+    const [openEdit, setOpenEdit] = useState<boolean>(false);
+    const [taskTitle, setTaskTitle] = useState<string>(value);
 
     const onDelete = () => {
         onDeletehandle(id)
     }
 
-    const onUpdate = () => {
-        onUpdatehandle(id);
+    const onToggle = () => {
+        onToggleTaskHandle(id);
     }
 
+    const onToggleEdit = useCallback(() => {
+        setOpenEdit(!openEdit);
+    }, [openEdit])
+
+    const acceptUpdate = useCallback(() => {
+        const modifiedTask: ITaskModifiedText = {
+            id,
+            value: taskTitle
+        }
+        dispatch(updateTaskText(modifiedTask));
+        onToggleEdit();
+    }, [dispatch, id, onToggleEdit, taskTitle]);
+
+    const cancelUpdate = useCallback(() => {
+        setTaskTitle(value);
+        onToggleEdit();
+    }, [onToggleEdit, value]);
+
+    const onChangeText = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e?.target?.value;
+        setTaskTitle(newValue);
+    }, []);
+
     const secondaryTxt = (completed) ? 'finished' : 'in progress';
-    const taskTitle = (completed) ? <TextLign>{value}</TextLign> : value;
+    const taskTxt = (completed) ? <TextLign>{taskTitle}</TextLign> : taskTitle;
 
     return (
-    <ListItem
-            secondaryAction={
-            <ContainerSpaceBetween>
-                <FormGroup>
-                    <FormControlLabel control={<StyledSwitchIcon defaultChecked={completed} onClick={onUpdate} />} label='Completed' />
-                </FormGroup>
-                <IconButton edge="end" aria-label="delete">
-                    <StyledDeleteIcon onClick={onDelete} />
-                </IconButton>
-            </ContainerSpaceBetween>
-            }
-        >
-        <ListItemAvatar>
-          <Avatar>
-            {(completed) ? <AssignmentTurnedInIcon /> : <AssignmentIcon />}
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={<Typography variant='h6'>{taskTitle}</Typography>}
-          secondary={<Typography variant='subtitle2'>{`status: ${secondaryTxt}`}</Typography>}
-        />
-    </ListItem>
+    <>
+        <StyledListItem
+                secondaryAction={
+                    (showButtons || !openEdit) && (
+                    <ContainerSpaceBetween>
+                        <FormGroup>
+                            <FormControlLabel control={<StyledSwitchIcon defaultChecked={completed} onClick={onToggle} disabled={openEdit}  />} label='Completed' />
+                        </FormGroup>
+                        <IconButton edge="end" aria-label="edit" onClick={onToggleEdit} disabled={openEdit}>
+                            <StyledEditIcon />
+                        </IconButton>
+                        <IconButton edge="end" aria-label="delete" onClick={onDelete} disabled={openEdit}>
+                            <StyledDeleteIcon />
+                        </IconButton>
+                    </ContainerSpaceBetween>
+                )}>
+            <ListItemAvatar>
+            <Avatar>
+                {(completed) ? <AssignmentTurnedInIcon /> : <AssignmentIcon />}
+            </Avatar>
+            </ListItemAvatar>
+            {(openEdit) ? (
+                <ContainerSpaceBetween>
+                    <TextField id="standard-basic" variant="standard" value={taskTitle} onChange={onChangeText} autoFocus />
+                    <StyledClearIcon onClick={cancelUpdate} />
+                    <StyledCheckIcon onClick={acceptUpdate} />
+                </ContainerSpaceBetween>
+            ) : (
+            <ListItemText
+                primary={<Typography variant='h6'>{taskTxt}</Typography>}
+                secondary={<Typography variant='subtitle2'>{`status: ${secondaryTxt}`}</Typography>} />
+            )}
+        </StyledListItem>
+    </>
     )
 }
 

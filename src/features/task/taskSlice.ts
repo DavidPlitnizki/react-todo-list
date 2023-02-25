@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { ITask, ITaskList } from '../../types';
+import { ITask, ITaskList, ITaskModifiedText } from '../../types';
 
 const initialState = {
     taskList: []
@@ -30,11 +30,19 @@ export const taskSlice = createSlice({
         }
         return item;
       })
+    },
+    updateTaskText: (state, action: PayloadAction<ITaskModifiedText>) => {
+      state.taskList = state.taskList.map((item: ITask) => {
+        if (item.id === action.payload.id) {
+          item.value = action.payload.value
+        }
+        return item;
+      })
     }
   },
 });
 
-export const { addTask, removeTask, toggleTask } = taskSlice.actions;
+export const { addTask, removeTask, toggleTask, updateTaskText } = taskSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

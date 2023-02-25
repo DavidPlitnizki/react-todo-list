@@ -11,7 +11,7 @@ import { colors } from '../styles/colors';
 
 const StyledBox = MUIStyled(Box)({
     backgroundColor: colors.whiteBg,
-    width: 'clamp(400px, 50%, 800px)',
+    width: 'clamp(400px, 70%, 800px)',
     margin: '0 auto',
     display: 'block'
 })
@@ -21,11 +21,10 @@ const Main:React.FC = () => {
     const {taskList}: ITaskList = useAppSelector(state => state.tasks);
     
     const onDelete = (id: string) => {
-        console.log("main: ", id);
         dispatch((removeTask(id)))
     }
 
-    const onUpdate = (id: string) => {
+    const onToggleTask = (id: string) => {
         dispatch((toggleTask(id)))
     }
 
@@ -35,7 +34,7 @@ const Main:React.FC = () => {
                                                     value={item.value}
                                                     completed={item.completed}
                                                     onDeletehandle={onDelete}
-                                                    onUpdatehandle={onUpdate} />);
+                                                    onToggleTaskHandle={onToggleTask} />);
 
 
 

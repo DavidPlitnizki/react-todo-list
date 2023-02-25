@@ -8,9 +8,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 
 const Layout = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  height: 100vh; */
+  height: 100dvh;
+  max-width: 100%;
 `;
 
 const theme = {
@@ -26,7 +25,7 @@ const [isOpenTaskModal, setIsOpenTaskModal] = useState<boolean>(false);
     <>
     <CssBaseline />
     <ThemeProvider theme={theme}>
-      <Layout>
+      <Layout className='layout-component'>
         <Header onOpenTaskModal={setIsOpenTaskModal} />
         <Main />
       </Layout>

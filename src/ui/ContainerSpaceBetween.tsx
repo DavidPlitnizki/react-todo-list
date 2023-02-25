@@ -16,7 +16,6 @@ interface IProps {
 }
 
 const ContainerSpaceBetween:React.FC<IProps> = ({children, className, bgColor}) => {
-    console.log("bg: ", bgColor)
     return (
         <SpaceBetween className={className} paddingSide bgColor={bgColor}>
             {children}
