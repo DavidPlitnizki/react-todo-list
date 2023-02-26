@@ -54,9 +54,14 @@ const StyledSearchIcon = MUIStyled(ManageSearchIcon)({
     }
 });
 
+const StyledFormGroup = MUIStyled(FormGroup)({
+    width: '6rem'
+});
+
 const ShadowedContainerCenter = styled(ContainerCenter)`
     box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgb(0 0 0 / 0%);
     border-radius: 10px;
+    margin-top: 10px;
 `;
   
   const Demo = styled('div')(({ theme }) => ({
@@ -100,11 +105,11 @@ const ListItems:React.FC<IProps> = ({list = [], onHideCompleted, isHideCompleted
         <ListWrapper>
             <ShadowedContainerCenter>
                 <ContainerSpaceBetween>
-                    <FormGroup>
+                    <StyledFormGroup>
                         <Badge badgeContent={amountfiltered} color="primary">
                             <FormControlLabel control={<Checkbox checked={isHideCompleted} onChange={onHideCompletedTasks} />} label="Hide completed" />    
                         </Badge>
-                    </FormGroup>
+                    </StyledFormGroup>
 
                     <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
                         List

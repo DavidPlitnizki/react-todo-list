@@ -23,6 +23,10 @@ const OwnFab = MUIStyled(Fab)({
       }
 })
 
+const StyledContainerCenter = MUIStyled(ContainerCenter)({
+    boxShadow: '0px 10px 30px -7px #000000, 5px 5px 15px 5px rgb(0 0 0 / 0%)'
+})
+
 
 interface IProps {
     onOpenTaskModal: (active: boolean) => void;
@@ -36,14 +40,14 @@ const Header:React.FC<IProps> = ({onOpenTaskModal}) => {
 
     return (
     <Box className='header-component'>
-        <ContainerCenter bgColor={colors.bg}>
+        <StyledContainerCenter bgColor={colors.bg}>
             <h1>TO DO LIST</h1>
             <FabWrapper>
                 <OwnFab color='primary' aria-label="add" onClick={onHandleClick}>
                     <AddIcon />
                 </OwnFab>
             </FabWrapper>
-        </ContainerCenter>
+        </StyledContainerCenter>
     </Box>
     )
 }
