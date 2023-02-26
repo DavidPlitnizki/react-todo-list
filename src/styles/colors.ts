@@ -1,7 +1,11 @@
 export const colors = {
-    bg: '#3E363F',
+    bg: '#089de3',
+    whiteBg: '#fefefe',
+    orange: '#ff9c3c',
+    green: '#1f751f',
     danger: '#DD403A',
-    text: '#FFFCE8',
+    text: '#fff',
+    text_bl: '474e5d',
     primary: '#697A21',
     secondary: '#B8B42D'
 }
