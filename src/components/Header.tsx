@@ -1,7 +1,5 @@
 import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import LoginIcon from '@mui/icons-material/Login';
-import { Avatar, Button, Typography } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import { Box } from '@mui/system';
 import { styled as MUIStyled } from '@mui/system';
@@ -10,6 +8,8 @@ import styled from 'styled-components';
 import {colors} from '../styles/colors';
 import ContainerCenter from '../ui/ContainerCenter';
 import ContainerContent from '../ui/ContainerContent';
+
+import UserAuth from './UserAuth';
 
 const FabWrapper = styled('div')`
     justify-self: start;
@@ -34,9 +34,7 @@ const StyledContainerContent = MUIStyled(ContainerContent)({
     justifyItems: 'center'
 })
 
-const StyledUserInfoBox = MUIStyled(Box)({
-    paddingInline: '1rem',
-})
+
 
 const StyledEndGrid = MUIStyled(Box)({
     justifySelf: 'end'
@@ -64,15 +62,7 @@ const Header:React.FC<IProps> = ({onOpenTaskModal}) => {
                 </FabWrapper>
                 <h1>TO DO LIST</h1>
                 <StyledEndGrid>
-                    <ContainerCenter padding={false}>
-                        <Avatar sx={{ bgcolor:'#B8B42D' }}>OP</Avatar>
-                        <StyledUserInfoBox>
-                            <Typography variant='body2'>User Name</Typography>
-                            <Button variant="contained" endIcon={<LoginIcon />}>
-                                Login
-                            </Button>
-                        </StyledUserInfoBox>
-                    </ContainerCenter>
+                    <UserAuth />
                 </StyledEndGrid>
             </StyledContainerContent>
         </StyledContainerCenter>
