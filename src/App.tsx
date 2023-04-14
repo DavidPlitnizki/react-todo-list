@@ -3,8 +3,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import styled, { ThemeProvider } from 'styled-components';
 
 import Header from './components/Header';
-import Main from './components/Main';
 import TaskModal from './components/Modal';
+import Main from './pages/Main';
 import { colors } from './styles/colors';
 
 

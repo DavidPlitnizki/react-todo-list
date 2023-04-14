@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should show title should show TO DO LIST 1`] = `
+<DocumentFragment>
+  <div
+    class="header-component MuiBox-root css-0"
+  >
+    <div
+      class="sc-bcXHqe eQHqsd css-bjpy14"
+    >
+      <h1>
+        TO DO LIST
+      </h1>
+      <div
+        class="sc-gswNZR dMvYgs"
+      >
+        <button
+          aria-label="add"
+          class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-primary MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-primary css-gnsr6b-MuiButtonBase-root-MuiFab-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="AddIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -2,14 +2,13 @@ import React, {useCallback, useMemo, useState} from 'react';
 import { Box } from '@mui/system';
 import { styled as MUIStyled } from '@mui/system';
 
+import List from '../components/List';
+import TaskItem from '../components/TaskItem';
 import { removeTask, toggleTask } from '../features/task/taskSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { colors } from '../styles/colors';
 import { ITask, ITaskList } from '../types';
 import {sortByName} from '../utils';
-
-import List from './List';
-import TaskItem from './TaskItem';
 
 
 const StyledBox = MUIStyled(Box)({
