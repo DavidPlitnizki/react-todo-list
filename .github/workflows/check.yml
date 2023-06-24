@@ -13,7 +13,12 @@ jobs:
               run: npm install
             - name: Build Project
               run: npm run build
-            - name: Testing
-              run: npm run test
+            - name: Run tests
+              run: |
+                npm install
+                npm run test
+              env:
+                NODE_ENV: test
+            
 
             
