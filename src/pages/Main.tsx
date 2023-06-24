@@ -23,7 +23,7 @@ const Main:React.FC = () => {
     const [isShowByName, setIsShowByName] = useState<string>('');
     const [sortName, setSortName] = useState<string>('');
     const dispatch = useAppDispatch();
-    const {taskList}: ITaskList = useAppSelector(state => state.tasks);
+    const {taskList} = useAppSelector<ITaskList>(state => state.tasks);
     
     const onDelete = useCallback((id: string) => {
         dispatch((removeTask(id)))
